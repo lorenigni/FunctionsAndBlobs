@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\VS_Solutions\\source\\trials\\FunctionApp1\\BlobQuickstart\\BlobQuickstart.csproj": {}
+    "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobQuickstart\\BlobQuickstart.csproj": {}
   },
   "projects": {
-    "C:\\VS_Solutions\\source\\trials\\FunctionApp1\\BlobQuickstart\\BlobQuickstart.csproj": {
+    "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobQuickstart\\BlobQuickstart.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\VS_Solutions\\source\\trials\\FunctionApp1\\BlobQuickstart\\BlobQuickstart.csproj",
+        "projectUniqueName": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobQuickstart\\BlobQuickstart.csproj",
         "projectName": "BlobQuickstart",
-        "projectPath": "C:\\VS_Solutions\\source\\trials\\FunctionApp1\\BlobQuickstart\\BlobQuickstart.csproj",
+        "projectPath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobQuickstart\\BlobQuickstart.csproj",
         "packagesPath": "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\",
-        "outputPath": "C:\\VS_Solutions\\source\\trials\\FunctionApp1\\BlobQuickstart\\obj\\",
+        "outputPath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobQuickstart\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\LorenzoBenigni\\AppData\\Roaming\\NuGet\\NuGet.Config",
