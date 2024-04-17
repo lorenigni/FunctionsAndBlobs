@@ -41,20 +41,15 @@ await blobClient.UploadAsync(localFilePath, true);
 
 WriteLine("Listing blobs...");
 
-// List all blobs in the container
 await foreach (BlobItem blobItem in containerClient.GetBlobsAsync())
 {
     WriteLine("\t" + blobItem.Name);
 }
 
-// Download the blob to a local file
-// Append the string "DOWNLOADED" before the .txt extension 
-// so you can compare the files in the data directory
 string downloadFilePath = localFilePath.Replace(".txt", "DOWNLOADED.txt");
 
 WriteLine("\nDownloading blob to\n\t{0}\n", downloadFilePath);
 
-// Download the blob's contents and save it to a file
 await blobClient.DownloadToAsync(downloadFilePath);
 
 WriteLine("Would you like to continue? Y/N");
@@ -77,8 +72,6 @@ if (answer?.ToUpper() == "Y")
     }
 
     await blobClient.UploadAsync(modifiedFilePath, true);
-
-    //string modifiedFilePath = downloadFilePath.Replace("DOWNLOADED.txt", "MODIFIED.txt");
 
     WriteLine("\nDownloading blob to\n\t{0}\n", modifiedFilePath);
 
