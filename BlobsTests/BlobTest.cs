@@ -39,6 +39,9 @@ public class BlobTest {
         DeleteBlobContainers();
 
         Directory.CreateDirectory(localPath);
+
+        // Così nonc c'è bisogno del FileStream
+        //StreamWriter writer = File.CreateText(localFilePath);
         await File.WriteAllTextAsync(localFilePath, loremIpsum);
         FileInfo localFile = new(localFilePath);
 
@@ -232,10 +235,10 @@ public class BlobTest {
 
             var expectedMetadata = new Dictionary<string, string> { { "foo", "bar" }, { "fizz", "buzz" } };
             var actualMetadata = (await blob.GetPropertiesAsync()).Value.Metadata;
-            
+
             Assert.AreEqual(expectedMetadata.Count, actualMetadata.Count);
 
-            foreach (KeyValuePair<string,string> expectedKvp in expectedMetadata)
+            foreach (KeyValuePair<string, string> expectedKvp in expectedMetadata)
             {
                 Assert.IsTrue(actualMetadata.TryGetValue(expectedKvp.Key, out var actualValue));
                 Assert.AreEqual(expectedKvp.Value, actualValue);
@@ -280,138 +283,131 @@ public class BlobTest {
         }
     }
 
+    [Test]
+    public async Task ListBlobsHierarchy()
+    {
+        string data = "hello world";
+        string containerName = "nunit" + Guid.NewGuid().ToString();
+        BlobContainerClient container = await blobServiceClient!.CreateBlobContainerAsync(containerName);
+        string virtualDirName = "example";
 
-    //[Test]
-    //public async Task ListBlobsHierarchy()
-    //{
-    //    string data = "hello world";
-    //    string virtualDirName = Randomize("sample-virtual-dir");
-    //    string containerName = Randomize("sample-container");
-    //    var containerClient = new BlobContainerClient(ConnectionString, containerName);
+        try
+        {
+            foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "/fizz.txt", virtualDirName + "/buzz.txt" })
+            {
+                container.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
+            }
 
-    //    try
-    //    {
-    //        containerClient.Create();
+            // tools to consume blob listing while looking good in the sample snippet
+            HashSet<string> downloadedBlobNames = new HashSet<string>();
+            HashSet<string> downloadedPrefixNames = new HashSet<string>();
+            void MyConsumeBlobItemFunc(BlobHierarchyItem item)
+            {
+                if (item.IsPrefix)
+                {
+                    downloadedPrefixNames.Add(item.Prefix);
+                }
+                else
+                {
+                    downloadedBlobNames.Add(item.Blob.Name);
+                }
+            }
 
-    //        foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "/fizz.txt", virtualDirName + "/buzz.txt" })
-    //        {
-    //            containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
-    //        }
-    //        var expectedBlobNamesResult = new HashSet<string> { "foo.txt", "bar.txt" };
+            // show in snippet where the prefix goes, but our test doesn't want a prefix for its data set
+            string blobPrefix = null;
+            string delimiter = "/";
+            IAsyncEnumerable<BlobHierarchyItem> results = container.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
 
-    //        // tools to consume blob listing while looking good in the sample snippet
-    //        HashSet<string> downloadedBlobNames = new HashSet<string>();
-    //        HashSet<string> downloadedPrefixNames = new HashSet<string>();
-    //        void MyConsumeBlobItemFunc(BlobHierarchyItem item)
-    //        {
-    //            if (item.IsPrefix)
-    //            {
-    //                downloadedPrefixNames.Add(item.Prefix);
-    //            }
-    //            else
-    //            {
-    //                downloadedBlobNames.Add(item.Blob.Name);
-    //            }
-    //        }
+            await foreach (BlobHierarchyItem item in results)
+            {
+                MyConsumeBlobItemFunc(item);
+            }
 
-    //        // show in snippet where the prefix goes, but our test doesn't want a prefix for its data set
-    //        string blobPrefix = null;
-    //        string delimiter = "/";
+            var expectedBlobNamesResult = new HashSet<string> { "foo.txt", "bar.txt" };
 
-    //        #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-    //        IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
-    //        await foreach (BlobHierarchyItem item in results)
-    //        {
-    //            MyConsumeBlobItemFunc(item);
-    //        }
-    //        #endregion
+            Assert.IsTrue(expectedBlobNamesResult.SetEquals(downloadedBlobNames));
+            Assert.IsTrue(new HashSet<string> { virtualDirName + '/' }.SetEquals(downloadedPrefixNames));
+        }
+        finally
+        {
+            await container.DeleteIfExistsAsync();
+        }
+    }
 
-    //        Assert.IsTrue(expectedBlobNamesResult.SetEquals(downloadedBlobNames));
-    //        Assert.IsTrue(new HashSet<string> { virtualDirName + '/' }.SetEquals(downloadedPrefixNames));
-    //    }
-    //    finally
-    //    {
-    //        await containerClient.DeleteIfExistsAsync();
-    //    }
-    //}
+    [Test]
+    public async Task CreateSharedAccessPolicy()
+    {
+        string containerName = "nunit" + Guid.NewGuid().ToString();
+        BlobContainerClient container = await blobServiceClient!.CreateBlobContainerAsync(containerName);
+        // Create one or more stored access policies.
+        List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
+                {
+                    new BlobSignedIdentifier
+                    {
+                        Id = "mysignedidentifier",
+                        AccessPolicy = new BlobAccessPolicy
+                        {
+                            StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+                            ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
+                            Permissions = "rw"
+                        }
+                    }
+                };
+        try
+        {
+            await container.CreateIfNotExistsAsync();
+            // Set the container's access policy.
+            await container.SetAccessPolicyAsync(permissions: signedIdentifiers);
+            BlobContainerAccessPolicy containerAccessPolicy = await container.GetAccessPolicyAsync();
 
-    //[Test]
-    //public async Task CreateSharedAccessPolicy()
-    //{
-    //    string connectionString = this.ConnectionString;
-    //    string containerName = Randomize("sample-container");
-    //    BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);
-
-    //    try
-    //    {
-    //        await containerClient.CreateIfNotExistsAsync();
-
-    //        #region Snippet:SampleSnippetsBlobMigration_SharedAccessPolicy
-    //        // Create one or more stored access policies.
-    //        List<BlobSignedIdentifier> signedIdentifiers = new List<BlobSignedIdentifier>
-    //            {
-    //                new BlobSignedIdentifier
-    //                {
-    //                    Id = "mysignedidentifier",
-    //                    AccessPolicy = new BlobAccessPolicy
-    //                    {
-    //                        StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
-    //                        ExpiresOn = DateTimeOffset.UtcNow.AddDays(1),
-    //                        Permissions = "rw"
-    //                    }
-    //                }
-    //            };
-    //        // Set the container's access policy.
-    //        await containerClient.SetAccessPolicyAsync(permissions: signedIdentifiers);
-    //        #endregion
-
-    //        BlobContainerAccessPolicy containerAccessPolicy = containerClient.GetAccessPolicy();
-    //        Assert.AreEqual(signedIdentifiers.First().Id, containerAccessPolicy.SignedIdentifiers.First().Id);
-    //    }
-    //    finally
-    //    {
-    //        await containerClient.DeleteIfExistsAsync();
-    //    }
-    //}
+            Assert.AreEqual(signedIdentifiers.FirstOrDefault().Id, containerAccessPolicy.SignedIdentifiers.FirstOrDefault().Id);
+        }
+        finally
+        {
+            await container.DeleteIfExistsAsync();
+        }
+    }
 
 
-    //[Test]
-    //public async Task DownloadBlobToStream()
-    //{
-    //    string data = "hello world";
+    [Test]
+    public async Task DownloadBlobToStream()
+    {
+        DeleteBlobContainers();
+        string data = "hello world";
+        //setup blob
+        string containerName = "nunit" + Guid.NewGuid().ToString();
+        string blobName = "nunit" + Guid.NewGuid().ToString();
+        BlobContainerClient container = await blobServiceClient!.CreateBlobContainerAsync(containerName);
+        string downloadFilePath = Path.Combine(localPath, "downloadedStream.txt");
 
-    //    //setup blob
-    //    string containerName = Randomize("sample-container");
-    //    string blobName = Randomize("sample-file");
-    //    var containerClient = new BlobContainerClient(ConnectionString, containerName);
-    //    string downloadFilePath = this.CreateTempPath();
+        try
+        {
+            container.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
+            BlobClient blobClient = container.GetBlobClient(blobName);
 
-    //    try
-    //    {
-    //        containerClient.Create();
-    //        containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
+            //Creo il file, Apro lo stream in locale e ci scrivo il contenuto del blob; poi leggo.
+            using (FileStream target = File.OpenWrite(downloadFilePath))
+            {
+                await blobClient.DownloadToAsync(target);
+            }
 
-    //        #region Snippet:SampleSnippetsBlobMigration_DownloadBlobToStream
-    //        BlobClient blobClient = containerClient.GetBlobClient(blobName);
-    //        using (Stream target = File.OpenWrite(downloadFilePath))
-    //        {
-    //            await blobClient.DownloadToAsync(target);
-    //        }
-    //        #endregion
+            FileStream fs = File.OpenRead(downloadFilePath);
+            string downloadedData = await new StreamReader(fs).ReadToEndAsync();
+            fs.Close();
 
-    //        FileStream fs = File.OpenRead(downloadFilePath);
-    //        string downloadedData = await new StreamReader(fs).ReadToEndAsync();
-    //        fs.Close();
-
-    //        Assert.AreEqual(data, downloadedData);
-    //    }
-    //    finally
-    //    {
-    //        await containerClient.DeleteIfExistsAsync();
-    //    }
-    //}
-
-
+            string downloadedData2;
+            using (StreamReader reader = File.OpenText(downloadFilePath))
+            {
+                downloadedData2 = await reader.ReadToEndAsync();
+            }
+            Assert.AreEqual(data, downloadedData2);
+            Assert.AreEqual(data, downloadedData);
+        }
+        finally
+        {
+            await container.DeleteIfExistsAsync();
+        }
+    }
 
     public async void DeleteBlobContainers()
     {
