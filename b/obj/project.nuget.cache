@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AMkx5kb5VbTQpDYIQmsROSAItc6p7JW5pjxPwn6n7jC+pkHw6+GMWg78Wtv40lwE5+MtGp7gGJT5Tz0j2OTlvw==",
+  "dgSpecHash": "ddt1x5Z1QTSoYuS+ru2zKrZ3mqF/AEb86saBArPx7BztWsmg92qF8k+PuWma5LrSjzn0jy4/MdKxxqY1youKsQ==",
   "success": true,
-  "projectFilePath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\b.csproj",
+  "projectFilePath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\AccessPolicy.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.identity\\1.11.0\\azure.identity.1.11.0.nupkg.sha512",

@@ -4080,9 +4080,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\b.csproj",
-      "projectName": "b",
-      "projectPath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\b.csproj",
+      "projectUniqueName": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\AccessPolicy.csproj",
+      "projectName": "AccessPolicy",
+      "projectPath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\AccessPolicy.csproj",
       "packagesPath": "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\",
       "outputPath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\b\\obj\\",
       "projectStyle": "PackageReference",

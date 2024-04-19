@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dgSpecHash": "4Bzd24CHR0Owl8aoLG9kWI6gnST0m30lcNaFdn5PqpX/n4txybD+hloDceTNfB4833TMmNQDkSRSpDppVcUF5g==",
+  "success": true,
+  "projectFilePath": "C:\\VS_Solutions\\source\\trials\\FunctionsAndBlobs\\BlobBindingsForFunctions\\BlobBindingsForFunctions.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.identity\\1.11.0\\azure.identity.1.11.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.storage.blobs\\12.19.1\\azure.storage.blobs.12.19.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\azure.storage.common\\12.18.1\\azure.storage.common.12.18.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\microsoft.identity.client\\4.60.1\\microsoft.identity.client.4.60.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\4.60.1\\microsoft.identity.client.extensions.msal.4.60.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.35.0\\microsoft.identitymodel.abstractions.6.35.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.1\\system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.io.hashing\\6.0.0\\system.io.hashing.6.0.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.7.0\\system.security.cryptography.protecteddata.4.7.0.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.text.encodings.web\\4.7.2\\system.text.encodings.web.4.7.2.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
+    "C:\\Users\\LorenzoBenigni\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+  ],
+  "logs": []
+}

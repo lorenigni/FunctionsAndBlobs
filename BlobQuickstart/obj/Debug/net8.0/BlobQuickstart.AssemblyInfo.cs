@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlobQuickstart")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41f9b45f9b058aa5102b341d10efb94ef1277d76")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42100b7ec76f78aff4eca4ae9df48f9e7814fbba")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlobQuickstart")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlobQuickstart")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

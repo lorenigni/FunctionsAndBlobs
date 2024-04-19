@@ -10,14 +10,11 @@ using Microsoft.Extensions.Logging;
 // Program.cs file that's the entry point for the app.
 
 // When using .NET isolated functions You're responsible for creating and starting your own host instance.
-//As such, you also have direct access to the configuration pipeline for your app.
+// As such, you also have direct access to the configuration pipeline for your app.
 
 // The ConfigureFunctionsWorkerDefaults method is used to add the settings required for
-//the function app to run in an isolated worker process.
-
-// The ConfigureFunctionsWorkerDefaults method is used to add
-//the settings required for the function app (ex.Set the default JsonSerializerOptions to
-//ignore casing on property names, Integrate with Azure Functions logging, Output binding middleware and features).
+//  the function app to run in an isolated worker process; (ex.Set the default JsonSerializerOptions to
+//  ignore casing on property names, Integrate with Azure Functions logging, Output binding middleware and features).
 
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
